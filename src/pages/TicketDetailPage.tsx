@@ -363,7 +363,7 @@ export function TicketDetailPage({ currentUser }: TicketDetailPageProps) {
                   )}
                   
                   {/* Resolve Button */}
-                  {canResolve() && !['Completed', 'Resolved'].includes(ticket.status) && (
+                  {canResolve() && !['Completed', 'Resolved', 'Escalated'].includes(ticket.status) && (
                     <Button 
                       onClick={() => handleStatusUpdate('Completed')}
                       variant="default"
@@ -376,7 +376,7 @@ export function TicketDetailPage({ currentUser }: TicketDetailPageProps) {
                   )}
 
                   {/* Status Update Buttons */}
-                  {canUpdateStatus('Attending') && ticket.status === 'New' && (
+                  {['New', 'Escalated'].includes(ticket.status) && (
                     <Button
                       onClick={() => handleStatusUpdate('Attending')}
                       variant="default"
