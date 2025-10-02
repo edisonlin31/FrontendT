@@ -254,12 +254,12 @@ export function TicketDetailPage({ currentUser }: TicketDetailPageProps) {
             <Badge variant="status" className={getStatusColor(ticket.status)}>
                 {ticket.status}
             </Badge>
-            <p className=" text-2xl font-semibold">#{ticket.id}</p>
+            <p className="text-2xl font-semibold truncate min-w-0 flex-1">{ticket.id}</p>
         </div>
       </AutoPageHeader>
 
       <div className="p-3">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
         {/* Main Content */}
         <div className="lg:col-span-2 space-y-3">
           {/* Ticket Details */}
