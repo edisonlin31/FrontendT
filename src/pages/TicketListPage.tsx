@@ -54,7 +54,6 @@ export function TicketListPage({ currentUser }: TicketListPageProps) {
     refetch,
     isFetching,
     isPending,
-    isPlaceholderData,
   } = useQuery<TicketsResult>({
     queryKey: ['tickets', { page: pageIndex + 1, limit: DEFAULT_PAGE_SIZE }],
     queryFn: () =>
@@ -62,9 +61,9 @@ export function TicketListPage({ currentUser }: TicketListPageProps) {
         page: pageIndex + 1,
         limit: DEFAULT_PAGE_SIZE,
       }),
-    placeholderData: (previousData) => previousData ?? emptyTicketsResult,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
+    retry: 1, // Retry once on failure
   });
 
   const tickets = ticketsResult?.tickets ?? [];
@@ -182,8 +181,8 @@ export function TicketListPage({ currentUser }: TicketListPageProps) {
     onGlobalFilterChange: setGlobalFilter,
   });
 
-  const showInitialLoading =
-    ((isPending || isLoading) || (isFetching && isPlaceholderData)) && tickets.length === 0;
+  // Simplified loading condition: only show loading on first fetch when no data exists
+  const showInitialLoading = (isLoading || isPending) && tickets.length === 0;
 
   if (showInitialLoading) {
     return (

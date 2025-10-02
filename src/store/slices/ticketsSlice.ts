@@ -135,6 +135,7 @@ const ticketsSlice = createSlice({
     clearCurrentTicket: (state) => {
       state.currentTicket = null;
     },
+    resetTicketsState: () => initialState,
   },
   extraReducers: (builder) => {
     builder
@@ -241,5 +242,5 @@ const ticketsSlice = createSlice({
   },
 });
 
-export const { clearError, setFilters, clearFilters, setPagination, clearCurrentTicket } = ticketsSlice.actions;
+export const { clearError, setFilters, clearFilters, setPagination, clearCurrentTicket, resetTicketsState } = ticketsSlice.actions;
 export default ticketsSlice.reducer;

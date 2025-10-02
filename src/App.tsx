@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
 import { Provider } from 'react-redux';
@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast';
 import { store } from './store';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { checkAuthStatus, logoutUser } from './store/slices/authSlice';
+import { resetTicketsState } from './store/slices/ticketsSlice';
 import { Layout } from './components/Layout';
 import { LoginPage } from './pages/LoginPage';
 import { DashboardPage } from './pages/DashboardPage';
@@ -26,19 +27,39 @@ function AppContent() {
   const dispatch = useAppDispatch();
   const queryClient = useQueryClient();
   const { user: currentUser, isAuthenticated, isLoading } = useAppSelector((state) => state.auth);
+  const [authCheckComplete, setAuthCheckComplete] = useState(false);
+  const [previousUserId, setPreviousUserId] = useState<string | null>(null);
 
   useEffect(() => {
     // Check if user is already logged in
-    dispatch(checkAuthStatus());
+    const checkAuth = async () => {
+      await dispatch(checkAuthStatus());
+      setTimeout(() => setAuthCheckComplete(true), 100);
+    };
+    checkAuth();
+    const timeout = setTimeout(() => {
+      console.warn('Auth check timeout - forcing completion');
+      setAuthCheckComplete(true);
+    }, 3000);
+    
+    return () => clearTimeout(timeout);
   }, [dispatch]);
 
-
+  // Clear React Query cache and Redux state when user changes or logs out
   useEffect(() => {
-      queryClient.clear();
-  }, [currentUser, queryClient]);
+    const currentUserId = currentUser?.id || null;
+    if (previousUserId !== null && previousUserId !== currentUserId) {
+      queryClient.removeQueries();
+      dispatch(resetTicketsState());
+    }
+    
+    setPreviousUserId(currentUserId);
+  }, [currentUser?.id, queryClient, previousUserId, dispatch]);
 
   const handleLogout = async () => {
-    dispatch(logoutUser());
+    queryClient.removeQueries();
+    dispatch(resetTicketsState());
+    await dispatch(logoutUser());
   };
 
   // Helper function to create protected routes with layout
@@ -53,7 +74,8 @@ function AppContent() {
     );
   };
 
-  if (isLoading) {
+  // Show loading only if auth check is not complete AND still loading
+  if (isLoading && !authCheckComplete) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-gray-500">Loading...</div>

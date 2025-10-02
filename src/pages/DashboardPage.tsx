@@ -34,6 +34,9 @@ export function DashboardPage() {
             },
           }),
     enabled: !!currentUser,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    retry: 1,
   });
 
   const tickets = ticketsResult?.tickets ?? [];
@@ -183,17 +186,15 @@ export function DashboardPage() {
               ) : (
                 <div className="space-y-4">
                   {recentTickets.map((ticket: Ticket) => (
-                    <div
+                    <Link
                       key={ticket.id}
-                      className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50"
+                      to={`/tickets/${ticket.id}`}
+                      className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer"
                     >
                       <div className="flex-1 min-w-0">
-                        <Link 
-                          to={`/tickets/${ticket.id}`}
-                          className="text-sm font-medium text-gray-900 hover:text-primary-600"
-                        >
+                        <div className="text-sm font-medium text-gray-900 hover:text-primary-600">
                           {ticket.title}
-                        </Link>
+                        </div>
                         <div className="flex items-center space-x-2 mt-1">
                           <Badge variant='status' className={getStatusColor(ticket.status)}>
                             {ticket.status}
@@ -214,7 +215,7 @@ export function DashboardPage() {
                           Due: {formatDate(ticket.expectedCompletionDate)}
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               )}
