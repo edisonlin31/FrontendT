@@ -75,7 +75,7 @@ export function TicketDetailPage({ currentUser }: TicketDetailPageProps) {
 
   const escalateMutation = useMutation({
     mutationFn: ({ ticketId, toLevel }: { ticketId: string; toLevel: string }) =>
-      api.escalateTicket(ticketId, toLevel, 'Escalated by system'),
+      api.escalateTicket(ticketId, toLevel, 'Ticket not solved'),
     onSuccess: (_, variables) => {
       // Immediately invalidate and refetch the ticket data
       queryClient.invalidateQueries({ queryKey: ['ticket', id] });
