@@ -151,7 +151,6 @@ export function TicketDetailPage({ currentUser }: TicketDetailPageProps) {
 
   const canUpdateStatus = (status: TicketStatus) => {
     if (!currentUser) return false;
-    if (currentUser.role === 'ADMIN') return true;
     
     // L1 can update status on L1 tickets
     if (currentUser.role === 'L1' && ticket.currentLevel === 'L1' && ['New', 'Attending', 'Completed'].includes(status)) return true;
@@ -173,7 +172,6 @@ export function TicketDetailPage({ currentUser }: TicketDetailPageProps) {
 
   const canEscalate = () => {
     if (!currentUser) return false;
-    if (currentUser.role === 'ADMIN') return true;
     
     const canEscalateResult = (
       // L1 can escalate to L2
@@ -187,7 +185,6 @@ export function TicketDetailPage({ currentUser }: TicketDetailPageProps) {
 
   const canResolve = () => {
     if (!currentUser) return false;
-    if (currentUser.role === 'ADMIN') return true;
     
     // L1 must be attending first before resolving and can only resolve L1 tickets
     if (currentUser.role === 'L1') {
@@ -212,8 +209,11 @@ export function TicketDetailPage({ currentUser }: TicketDetailPageProps) {
     return currentUser.role === 'L2' && ticket.currentLevel === 'L2' && ticket.status !== 'Completed' && ticket.status !== 'Resolved';
   };
 
-  // Check if there are any available actions
   const hasAvailableActions = () => {
+    if (new Date(ticket.expectedCompletionDate) < new Date() && ticket.status !== 'Resolved') {
+      return false;
+    }
+    
     return (
       canEscalate() ||
       (canResolve() && !['Completed', 'Resolved'].includes(ticket.status)) ||
@@ -385,18 +385,6 @@ export function TicketDetailPage({ currentUser }: TicketDetailPageProps) {
                       disabled={updateStatusMutation.isPending}
                     >
                       Start Working
-                    </Button>
-                  )}
-
-                  {canUpdateStatus('Completed') && ticket.status === 'Attending' && (
-                    <Button
-                      onClick={() => handleStatusUpdate('Completed')}
-                      variant="default"
-                      size="sm"
-                      className="flex-1 h-9 px-4 py-2 text-sm font-medium"
-                      disabled={updateStatusMutation.isPending}
-                    >
-                      Mark Complete
                     </Button>
                   )}
                 </div>

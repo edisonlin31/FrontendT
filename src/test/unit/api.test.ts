@@ -1,6 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { api, getToken, getStoredUser } from '../../lib/api';
 
+// Get API base URL from environment or use test default
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
+
 // Mock fetch
 const mockFetch = vi.fn();
 global.fetch = mockFetch;
@@ -49,7 +52,7 @@ describe('API', () => {
       const result = await api.login('test@example.com', 'password');
 
       expect(mockFetch).toHaveBeenCalledWith(
-        'http://localhost:3001/api/auth/login',
+        `${API_BASE_URL}/auth/login`,
         expect.objectContaining({
           method: 'POST',
           headers: {
@@ -185,7 +188,7 @@ describe('API', () => {
   const result = await api.getTickets();
 
       expect(mockFetch).toHaveBeenCalledWith(
-        'http://localhost:3001/api/tickets',
+        `${API_BASE_URL}/tickets`,
         expect.objectContaining({
           headers: expect.objectContaining({
             Authorization: 'Bearer valid-token',
@@ -248,7 +251,7 @@ describe('API', () => {
       const result = await api.createTicket(ticketData);
 
       expect(mockFetch).toHaveBeenCalledWith(
-        'http://localhost:3001/api/tickets',
+        `${API_BASE_URL}/tickets`,
         expect.objectContaining({
           method: 'POST',
           headers: expect.objectContaining({

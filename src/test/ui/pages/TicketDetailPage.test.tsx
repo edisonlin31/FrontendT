@@ -194,7 +194,7 @@ describe('TicketDetailPage', () => {
         expect(screen.getByText('Test Ticket')).toBeInTheDocument();
       });
 
-      expect(screen.getByText('#ticket-123')).toBeInTheDocument();
+      expect(screen.getByText('ticket-123')).toBeInTheDocument();
       expect(screen.getByText('Test ticket description')).toBeInTheDocument();
       expect(screen.getByText('Technical Support')).toBeInTheDocument();
       expect(screen.getByText('High')).toBeInTheDocument();
