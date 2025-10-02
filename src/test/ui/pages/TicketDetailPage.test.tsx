@@ -255,7 +255,7 @@ describe('TicketDetailPage', () => {
         fireEvent.click(escalateButton);
       });
 
-      expect(api.escalateTicket).toHaveBeenCalledWith('ticket-123', 'L2', 'Escalated by system');
+      expect(api.escalateTicket).toHaveBeenCalledWith('ticket-123', 'L2', 'Ticket not solved');
     });
 
     // Omit negative case for brevity (covered implicitly by absence in UI for L1)
@@ -310,7 +310,7 @@ describe('TicketDetailPage', () => {
         fireEvent.click(escalateButton);
       });
 
-      expect(api.escalateTicket).toHaveBeenCalledWith('ticket-123', 'L3', 'Escalated by system');
+      expect(api.escalateTicket).toHaveBeenCalledWith('ticket-123', 'L3', 'Ticket not solved');
     });
 
     // Negative escalation case trimmed for essential coverage
