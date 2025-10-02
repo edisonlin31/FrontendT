@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@theme {
+  --color-white: #fff;
+  --color-primary: #FF8800;
+  --color-primary-foreground: #F8FAFC;
+  --color-muted-foreground: #64748B;
+  --color-warning-100: #fef3c7;
+  --color-secondary: #F1F5F9;
+}
+
+@layer utilities {
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+  
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+  
+  .btn-primary-orange {
+    background-color: #ea580c !important;
+  }
+  
+  .btn-primary-orange:hover {
+    background-color: #c2410c !important;
+  }
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
