@@ -12,7 +12,7 @@ import type {
 } from '../models/dto';
 
 // API Configuration
-const API_BASE_URL = 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://backendt-production.up.railway.app/api';
 
 // Local storage for token
 const TOKEN_KEY = 'helpdesk_token';

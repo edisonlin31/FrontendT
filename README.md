@@ -70,11 +70,53 @@ A modern, React-based helpdesk ticket management system inspired by Jira, built 
 # Install dependencies
 npm install
 
-# Start development server
+# Start development server (uses localhost:3001 API)
 npm run dev
+
+# Build for production (uses Railway API)
+npm run build
 ```
 
 The application will be available at `http://localhost:5173`
+
+## ⚙️ Environment Configuration
+
+The application uses different API endpoints for development and production environments:
+
+### Environment Files
+
+- **`.env.development`** - Used during development (`npm run dev`)
+- **`.env.production`** - Used during production build (`npm run build`)
+- **`.env.local`** - Local overrides (gitignored, highest priority)
+
+### API Configuration
+
+| Environment | Command | API Base URL |
+|-------------|---------|--------------|
+| Development | `npm run dev` | `http://localhost:3001/api` |
+| Production | `npm run build` | `https://backendt-production.up.railway.app/api` |
+
+### Setting Up Your Environment
+
+1. **Development Setup**: The `.env.development` file is already configured for local backend development
+2. **Production Setup**: The `.env.production` file points to the Railway production backend
+3. **Local Overrides**: Create `.env.local` for personal development settings (this file is gitignored)
+
+### Environment Variables
+
+All frontend environment variables must be prefixed with `VITE_`:
+
+```bash
+# .env.development
+VITE_API_BASE_URL=http://localhost:3001/api
+
+# .env.production  
+VITE_API_BASE_URL=https://backendt-production.up.railway.app/api
+```
+
+### Verifying Configuration
+
+You can verify the correct API URL is being used by checking the browser's network tab or adding a temporary console log in `src/lib/api.ts`.
 
 ### Demo Accounts
 
