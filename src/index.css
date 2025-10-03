@@ -3,12 +3,15 @@
 :root {
   --color-primary: #FF8800;
   --color-primary-foreground: #F8FAFC;
+  --color-muted-foreground: #64748B;
+  --color-warning-100: #fef3c7;
+  --color-secondary: #F1F5F9;
 }
 
 @theme {
   --color-white: #fff;
   --color-primary: #FF8800;
-  --color-primary-foreground: #F8FAFC;
+  --color-primary-foreground: #FF8800;
   --color-muted-foreground: #64748B;
   --color-warning-100: #fef3c7;
   --color-secondary: #F1F5F9;
@@ -70,7 +73,5 @@ button:focus-visible {
   a:hover {
     color: #747bff;
   }
-  button {
-    background-color: #f9f9f9;
-  }
+
 }

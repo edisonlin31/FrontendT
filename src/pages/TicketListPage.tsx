@@ -245,9 +245,10 @@ export function TicketListPage({ currentUser }: TicketListPageProps) {
             </div>
               
             {/* Create Ticket Button */}
-            {(currentUser.role === 'ADMIN' || currentUser.role === 'L1') && (
+            {(currentUser.role === 'L1') && (
               <Button 
                 onClick={() => setShowCreateTicketPopup(true)}
+                variant= 'default'
                 className="px-4 py-2 flex items-center space-x-2 w-full sm:w-auto"
               >
                 <Plus className="w-4 h-4" />
