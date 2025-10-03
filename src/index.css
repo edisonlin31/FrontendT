@@ -29,6 +29,13 @@
   .btn-primary-orange:hover {
     background-color: #c2410c !important;
   }
+
+  .btn-primary-fallback {
+    background-color: #FF8800;
+  }
+  .btn-primary-fallback:hover {
+    background-color: #FF9933;
+  }
 }
 
 @keyframes blob {

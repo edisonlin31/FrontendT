@@ -7,6 +7,23 @@ export default {
   ],
   theme: {
     extend: {
+      colors: {
+        primary: {
+          DEFAULT: '#FF8800',
+          foreground: '#F8FAFC',
+          50: '#FFF4E6',
+          100: '#FFE5BF',
+          200: '#FFD099',
+          300: '#FFB266',
+          400: '#FF9933',
+          500: '#FF8800',
+          600: '#DB6E00',
+          700: '#B75600',
+          800: '#933F00',
+          900: '#7A3200',
+        },
+        secondary: '#F1F5F9'
+      },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
         'slide-up': 'slideUp 0.3s ease-out',
